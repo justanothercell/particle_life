@@ -1,11 +1,14 @@
 use std::ptr::{null_mut};
 
 pub(crate) struct World{
+    pub(crate) width: usize,
+    pub(crate) height: usize,
+    pub(crate) p_types: Vec<ParticleType>,
     pub(crate) chunks: Vec<Vec<Chunk>>
 }
 
 impl World {
-    pub(crate) fn new(w: usize, h: usize) -> Self{
+    pub(crate) fn new(w: usize, h: usize, p_types: Vec<ParticleType>) -> Self{
         let mut chunks = vec![];
         for _ in 0..w {
             let mut column = vec![];
@@ -29,6 +32,9 @@ impl World {
             }
         }
         Self {
+            width: w * 10,
+            height: h * 10,
+            p_types,
             chunks
         }
     }
@@ -50,10 +56,16 @@ pub(crate) struct Chunk {
     pub(crate) particles: Vec<Particle>
 }
 
+pub(crate) struct ParticleType {
+    pub(crate) id: usize,
+    pub(crate) color: (u8, u8, u8),
+    pub(crate) coefficients: Vec<f32>
+}
 
 pub(crate) struct Particle{
     pub(crate) x: f32,
     pub(crate) y: f32,
     pub(crate) vx: f32,
-    pub(crate) vy: f32
+    pub(crate) vy: f32,
+    pub(crate) pt: *const ParticleType
 }

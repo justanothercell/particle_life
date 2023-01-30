@@ -1,43 +1,45 @@
 use crate::world::World;
 
-pub(crate) fn tick(world: &mut World, delta_ms: u128) {
-    let delta = delta_ms as f32 / 100.0;
+pub(crate) fn tick(world: &mut World, delta_micro: u128) {
+    let delta = delta_micro.max(1) as f32 / 100_000.0;
     // UPDATE SPEED
     for x in 0..world.chunks.len() {
         for y in 0..world.chunks[x].len() {
             let chunk: *const _ = &world.chunks[x][y];
             for p in &mut world.chunks[x][y].particles{
-                for (x, y) in unsafe {match (p.x > 5.0, p.y > 5.0) {
-                    (false, false) => vec![(*chunk).particles.iter().map(|p| (p.x, p.y)).collect::<Vec<_>>(),
-                                           (*(*chunk).west).particles.iter().map(|p| (p.x-10.0, p.y)).collect::<Vec<_>>(),
-                                           (*(*(*chunk).west).north).particles.iter().map(|p| (p.x-10.0, p.y-10.0)).collect::<Vec<_>>(),
-                                           (*(*chunk).north).particles.iter().map(|p| (p.x, p.y-10.0)).collect::<Vec<_>>()],
-                    (false, true) => vec![(*chunk).particles.iter().map(|p| (p.x, p.y)).collect::<Vec<_>>(),
-                                          (*(*chunk).west).particles.iter().map(|p| (p.x-10.0, p.y)).collect::<Vec<_>>(),
-                                          (*(*(*chunk).west).south).particles.iter().map(|p| (p.x-10.0, p.y+10.0)).collect::<Vec<_>>(),
-                                          (*(*chunk).south).particles.iter().map(|p| (p.x, p.y+10.0)).collect::<Vec<_>>()],
-                    (true, false) => vec![(*chunk).particles.iter().map(|p| (p.x, p.y)).collect::<Vec<_>>(),
-                                          (*(*chunk).east).particles.iter().map(|p| (p.x+10.0, p.y)).collect::<Vec<_>>(),
-                                          (*(*(*chunk).east).north).particles.iter().map(|p| (p.x+10.0, p.y-10.0)).collect::<Vec<_>>(),
-                                          (*(*chunk).north).particles.iter().map(|p| (p.x, p.y-10.0)).collect::<Vec<_>>()],
-                    (true, true) => vec![(*chunk).particles.iter().map(|p| (p.x, p.y)).collect::<Vec<_>>(),
-                                         (*(*chunk).east).particles.iter().map(|p| (p.x+10.0, p.y)).collect::<Vec<_>>(),
-                                         (*(*(*chunk).east).south).particles.iter().map(|p| (p.x+10.0, p.y+10.0)).collect::<Vec<_>>(),
-                                         (*(*chunk).south).particles.iter().map(|p| (p.x, p.y+10.0)).collect::<Vec<_>>()],
+                for (x, y, pt_id) in unsafe {match (p.x > 5.0, p.y > 5.0) {
+                    (false, false) => vec![(*chunk).particles.iter().map(|p| (p.x, p.y,  (*p.pt).id)).collect::<Vec<_>>(),
+                                           (*(*chunk).west).particles.iter().map(|p| (p.x-10.0, p.y, (*p.pt).id)).collect::<Vec<_>>(),
+                                           (*(*(*chunk).west).north).particles.iter().map(|p| (p.x-10.0, p.y-10.0, (*p.pt).id)).collect::<Vec<_>>(),
+                                           (*(*chunk).north).particles.iter().map(|p| (p.x, p.y-10.0, (*p.pt).id)).collect::<Vec<_>>()],
+                    (false, true) => vec![(*chunk).particles.iter().map(|p| (p.x, p.y, (*p.pt).id)).collect::<Vec<_>>(),
+                                          (*(*chunk).west).particles.iter().map(|p| (p.x-10.0, p.y, (*p.pt).id)).collect::<Vec<_>>(),
+                                          (*(*(*chunk).west).south).particles.iter().map(|p| (p.x-10.0, p.y+10.0, (*p.pt).id)).collect::<Vec<_>>(),
+                                          (*(*chunk).south).particles.iter().map(|p| (p.x, p.y+10.0, (*p.pt).id)).collect::<Vec<_>>()],
+                    (true, false) => vec![(*chunk).particles.iter().map(|p| (p.x, p.y, (*p.pt).id)).collect::<Vec<_>>(),
+                                          (*(*chunk).east).particles.iter().map(|p| (p.x+10.0, p.y, (*p.pt).id)).collect::<Vec<_>>(),
+                                          (*(*(*chunk).east).north).particles.iter().map(|p| (p.x+10.0, p.y-10.0, (*p.pt).id)).collect::<Vec<_>>(),
+                                          (*(*chunk).north).particles.iter().map(|p| (p.x, p.y-10.0, (*p.pt).id)).collect::<Vec<_>>()],
+                    (true, true) => vec![(*chunk).particles.iter().map(|p| (p.x, p.y, (*p.pt).id)).collect::<Vec<_>>(),
+                                         (*(*chunk).east).particles.iter().map(|p| (p.x+10.0, p.y, (*p.pt).id)).collect::<Vec<_>>(),
+                                         (*(*(*chunk).east).south).particles.iter().map(|p| (p.x+10.0, p.y+10.0, (*p.pt).id)).collect::<Vec<_>>(),
+                                         (*(*chunk).south).particles.iter().map(|p| (p.x, p.y+10.0, (*p.pt).id)).collect::<Vec<_>>()],
                 }}.into_iter().flatten().collect::<Vec<_>>() {
                     if (p.x, p.y) != (x, y) {
                         let dx = x - p.x;
                         let dy = y - p.y;
 
+                        let c = unsafe { (*p.pt).coefficients.get_unchecked(pt_id) };
+
                         let mut dp3 = dx.powi(2) + dy.powi(2);
-                        if dp3 < 2.0 {
+                        if dp3 < 2.0 && c > &0.0 {
                             dp3 = -f32::max(dp3, 0.1)
                         }
-                        p.vx += dx * delta * 0.2 / dp3;
-                        p.vy += dy * delta * 0.2 / dp3;
+                        p.vx += dx * delta * 0.2 / dp3 * c;
+                        p.vy += dy * delta * 0.2 / dp3 * c;
                     }
-                    p.vx *= 0.9999;
-                    p.vy *= 0.9999;
+                    p.vx *= 0.9995;
+                    p.vy *= 0.9995;
                 }
             }
         }
