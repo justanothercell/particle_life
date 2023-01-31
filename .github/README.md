@@ -1,4 +1,6 @@
 # Particle Life
+[Gallery](#gallery)
+
 Implementation of Particle Life in Rust using SDL2 for graphics.
 
 ![particle_life_JJA9YE4DSF.png](img%2Fparticle_life_JJA9YE4DSF.png)
