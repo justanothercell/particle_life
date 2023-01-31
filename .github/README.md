@@ -69,4 +69,7 @@ If necessary replace with a version compatible to your download.
 <img src="img/particle_life_vY6k93bhWe.png" style="width: 30%">
 <img src="img/particle_life_zB7nm8V9gB.png" style="width: 30%">
 <img src="img/particle_life_ZTA3KZiH0D.png" style="width: 30%">
+<img src="img/img/particle_life_JMFnMYu61u.png" style="width: 30%">
+<img src="img/img/particle_life_qKVdys72F0.png" style="width: 30%">
+<img src="img/img/particle_life_uGUNOKSr8r.png" style="width: 30%">
 </div>
