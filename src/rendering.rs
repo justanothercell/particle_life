@@ -9,7 +9,9 @@ use crate::world::World;
 pub(crate) struct SDLWindow {
     pub(crate) width: u32,
     pub(crate) height: u32,
+    #[allow(dead_code)]
     sdl: Sdl,
+    #[allow(dead_code)]
     ttf: &'static Sdl2TtfContext,
     pub(crate) font: Font<'static, 'static>,
     pub(crate) texture_creator: TextureCreator<WindowContext>,
@@ -30,7 +32,7 @@ impl SDLWindow {
         let ttf: &'static _ = Box::leak(ttf);
         let font = ttf.load_font("Consolas/CONSOLA.TTF", 16).expect("unable to load font");
         let video_subsystem = sdl.video().expect("unable to create sdl_context");
-        let window = video_subsystem.window("rust-sdl2 demo", width, height)
+        let window = video_subsystem.window("Paticle Life", width, height)
             .position_centered()
             .build()
             .expect("could not initialize video subsystem");
@@ -70,7 +72,7 @@ macro_rules! text(
     )
 );
 
-pub(crate) fn render(world: &World, window: &mut SDLWindow, camera: &Camera, tick_rate: usize, paused: bool, seed: u32, delta: u128) {
+pub(crate) fn render(world: &World, window: &mut SDLWindow, camera: &Camera, tick_rate: usize, paused: bool, following: bool, seed: &str, delta: u128) {
     window.canvas.set_draw_color(Color::RGB(0, 0, 0));
     window.canvas.clear();
 
@@ -98,11 +100,12 @@ pub(crate) fn render(world: &World, window: &mut SDLWindow, camera: &Camera, tic
     }
 
     text!(window, 10, 10,
-        &format!("{:3.1}mspt {:6.1}fps {}",
+        &format!("{:3.1}mspt {:6.1}fps {} {}",
             delta as f32 / 1000.0, 1000_000.0 / delta as f32,
-            if paused { "paused".to_string() } else { format!("1/{} speed", tick_rate) }
+            if paused { "paused".to_string() } else { format!("1/{} speed", tick_rate) },
+            if following { "following" } else { "" }
         ), (255, 255, 255));
-    text!(window, 10, window.height - 25, &format!("seed: {seed:08X}"), (255, 255, 255));
+    text!(window, 10, window.height - 25, &format!("seed: {seed}"), (255, 255, 255));
 
     window.canvas.present();
 }

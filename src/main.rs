@@ -2,6 +2,8 @@ mod rendering;
 mod world;
 mod simulation;
 
+use std::collections::hash_map::DefaultHasher;
+use std::hash::{Hash, Hasher};
 use std::process::exit;
 use rand::{Rng, RngCore, SeedableRng};
 use sdl2::event::Event;
@@ -11,10 +13,21 @@ use crate::simulation::tick;
 use crate::world::{Particle, ParticleType, World};
 
 fn main() {
-    let mut seeder = rand::thread_rng();
-    let seed = seeder.next_u32();
-    println!("seed: {seed:08X}");
-    let mut rnd = rand::prelude::StdRng::seed_from_u64(seed as u64);
+    let args = std::env::args().collect::<Vec<_>>();
+    let seed = if args.len() == 1 {
+        let mut seeder = rand::thread_rng();
+        format!("{:08X}", seeder.next_u32())
+    } else {
+        args[1].to_string()
+    };
+
+    println!("seed: {seed}");
+    let hash = {
+        let mut hasher = DefaultHasher::new();
+        seed.hash(&mut hasher);
+        hasher.finish()
+    };
+    let mut rnd = rand::prelude::StdRng::seed_from_u64(hash);
 
     let colors = vec![
         (255, 0, 0), (0, 255, 0), (0, 255, 0),
@@ -47,11 +60,11 @@ fn main() {
             pt: &world.p_types[c]
         })
     }
-    run(world, seed)
+    run(world, &seed)
 }
 
-fn run(mut world: World, seed: u32){
-    let mut sdl_window = SDLWindow::new(800, 600);
+fn run(mut world: World, seed: &str){
+    let mut window = SDLWindow::new(800, 600);
     let mut camera = Camera {
         zoom: 1.0,
         translate: (0.0, 0.0),
@@ -61,9 +74,10 @@ fn run(mut world: World, seed: u32){
     let mut mouse_pos = (0.0, 0.0);
     let mut tick_rate = 1;
     let mut paused = false;
+    let mut following = false;
     let mut frame_count = 0usize;
     loop {
-        for event in sdl_window.event_pump.poll_iter() {
+        for event in window.event_pump.poll_iter() {
             match event {
                 Event::Quit { .. } |
                 Event::KeyDown { keycode: Some(Keycode::Escape), .. } => {
@@ -93,6 +107,7 @@ fn run(mut world: World, seed: u32){
                         if let Some(key) = keycode {
                             match key {
                                 Keycode::Space => paused = !paused,
+                                Keycode::P => following = !following,
                                 Keycode::Up =>  if tick_rate < 64 { tick_rate *= 2 },
                                 Keycode::Down => if tick_rate > 1 { tick_rate /= 2 }
                                 _ => ()
@@ -105,8 +120,30 @@ fn run(mut world: World, seed: u32){
         }
         if elapsed < 150_000 && frame_count % tick_rate == 0 && !paused {
             tick(&mut world, elapsed);
+            if following {
+                let mut sum_vx = 0.0;
+                let mut sum_vy = 0.0;
+                let mut total = 0.0;
+                for x in 0..world.chunks.len() {
+                    for y in 0..world.chunks[x].len() {
+                        for p in &world.chunks[x][y].particles {
+                            let xp = ((x as f32 * 10.0 + p.x) + camera.translate.0).rem_euclid(world.width as f32) * camera.zoom;
+                            let yp = ((y as f32 * 10.0 + p.y) + camera.translate.1).rem_euclid(world.height as f32) * camera.zoom;
+                            if xp > window.width as f32 / 4.0 && xp < window.width as f32 * 3.0 / 4.0 && yp > window.height as f32 / 4.0 && yp < window.height as f32 * 3.0 / 4.0 {
+                                sum_vx += p.vx;
+                                sum_vy += p.vy;
+                                total += 1.0;
+                            }
+                        }
+                    }
+                }
+                if total > 0.0 {
+                    camera.translate.0 -= sum_vx / total;
+                    camera.translate.1 -= sum_vy / total;
+                }
+            }
         }
-        render(&world, &mut sdl_window, &camera, tick_rate, paused, seed, elapsed);
+        render(&world, &mut window, &camera, tick_rate, paused, following, seed, elapsed);
         frame_count = frame_count.wrapping_add(1);
         elapsed = time.elapsed().as_micros();
         time = std::time::Instant::now();
