@@ -23,6 +23,7 @@ understand when expressed in a table like this:
 | yellow | 0.5    | 1   | 1     |
 | red    | -1     | 0.5 | -1    |
 | green  | 1      | 1   | -1    |
+
 _0: neutral, 1: column is attracted by row, -1: column is repelled by row_
 
 These simple rules give life to a variety of small creatures, moving around
