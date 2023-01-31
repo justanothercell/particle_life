@@ -45,16 +45,17 @@ and a particle count of 5000 in a 800x600 world (same as screen size)
 
 ## Cool Seeds
 - `23212C8C` (13 colors, 10000 particles)
-
-<img src="img/particle_life_PflT5PsB1L.png" style="width: 20%">
-<img src="img/particle_life_nj71PpQ7ke.png" style="width: 28%">
-
+<div>
+    <img src="img/particle_life_PflT5PsB1L.png" style="width: 20%">
+    <img src="img/particle_life_nj71PpQ7ke.png" style="width: 28%">
+</div>
 - 47BB2C8E (7 colors, 6000 particles)
-
-<img src="img/particle_life_sDHRcFPpQq.png" style="width: 23%">
-<img src="img/particle_life_tMP42BK47l.png" style="width: 20%">
-<img src="img/particle_life_uRicIogVLS.png" style="width: 29%">
-<img src="img/particle_life_tDxwGtib4m.png" style="width: 31%">
+<div>
+    <img src="img/particle_life_sDHRcFPpQq.png" style="width: 20%">
+    <img src="img/particle_life_tMP42BK47l.png" style="width: 17%">
+    <img src="img/particle_life_uRicIogVLS.png" style="width: 25%">
+    <img src="img/particle_life_tDxwGtib4m.png" style="width: 27%">
+</div>
 (the red/green end to give up their red particles to the red/yellow ones. sometimes a few green particles stay (4th image))
 
 ## Key Binds
@@ -78,20 +79,20 @@ If necessary replace with a version compatible to your download.
 
 ## Gallery
 <div>
-<img src="img/particle_life_6fi9OwZucZ.png" style="width: 30%">
-<img src="img/particle_life_060FKP3GCj.png" style="width: 30%">
-<img src="img/particle_life_bOXJLRWIYc.png" style="width: 30%">
-<img src="img/particle_life_CCLCHxKC9c.png" style="width: 30%">
-<img src="img/particle_life_CdhsHAZnNX.png" style="width: 30%">
-<img src="img/particle_life_JBde8WtrUI.png" style="width: 30%">
-<img src="img/particle_life_nHavG9BXcS.png" style="width: 30%">
-<img src="img/particle_life_SiuCV4qD08.png" style="width: 30%">
-<img src="img/particle_life_Uf2qaENn61.png" style="width: 30%">
-<img src="img/particle_life_vY6k93bhWe.png" style="width: 30%">
-<img src="img/particle_life_zB7nm8V9gB.png" style="width: 30%">
-<img src="img/particle_life_ZTA3KZiH0D.png" style="width: 30%">
-<img src="img/particle_life_JMFnMYu61u.png" style="width: 30%">
-<img src="img/particle_life_qKVdys72F0.png" style="width: 30%">
-<img src="img/particle_life_uGUNOKSr8r.png" style="width: 30%">
-<img src="img/particle_life_Zjsx3uoLo9.png" style="width: 30%">
+    <img src="img/particle_life_6fi9OwZucZ.png" style="width: 30%">
+    <img src="img/particle_life_060FKP3GCj.png" style="width: 30%">
+    <img src="img/particle_life_bOXJLRWIYc.png" style="width: 30%">
+    <img src="img/particle_life_CCLCHxKC9c.png" style="width: 30%">
+    <img src="img/particle_life_CdhsHAZnNX.png" style="width: 30%">
+    <img src="img/particle_life_JBde8WtrUI.png" style="width: 30%">
+    <img src="img/particle_life_nHavG9BXcS.png" style="width: 30%">
+    <img src="img/particle_life_SiuCV4qD08.png" style="width: 30%">
+    <img src="img/particle_life_Uf2qaENn61.png" style="width: 30%">
+    <img src="img/particle_life_vY6k93bhWe.png" style="width: 30%">
+    <img src="img/particle_life_zB7nm8V9gB.png" style="width: 30%">
+    <img src="img/particle_life_ZTA3KZiH0D.png" style="width: 30%">
+    <img src="img/particle_life_JMFnMYu61u.png" style="width: 30%">
+    <img src="img/particle_life_qKVdys72F0.png" style="width: 30%">
+    <img src="img/particle_life_uGUNOKSr8r.png" style="width: 30%">
+    <img src="img/particle_life_Zjsx3uoLo9.png" style="width: 30%">
 </div>
