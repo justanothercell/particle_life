@@ -51,7 +51,11 @@ and a particle count of 5000 in a 800x600 world (same as screen size)
 
 - 47BB2C8E (7 colors, 6000 particles)
 
-![particle_life_sDHRcFPpQq.png](img%2Fparticle_life_sDHRcFPpQq.png)
+<img src="img/particle_life_sDHRcFPpQq.png" style="width: 23%">
+<img src="img/particle_life_tMP42BK47l.png" style="width: 20%">
+<img src="img/particle_life_uRicIogVLS.png" style="width: 29%">
+<img src="img/particle_life_tDxwGtib4m.png" style="width: 31%">
+(the red/green end to give up their red particles to the red/yellow ones. sometimes a few green particles stay (4th image))
 
 ## Key Binds
 - `Up`/`Down` slower/faster tick rate
