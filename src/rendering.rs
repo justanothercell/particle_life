@@ -72,7 +72,7 @@ macro_rules! text(
     )
 );
 
-pub(crate) fn render(world: &World, window: &mut SDLWindow, camera: &Camera, tick_rate: usize, paused: bool, following: bool, seed: &str, delta: u128) {
+pub(crate) fn render(world: &World, window: &mut SDLWindow, camera: &Camera, tick_rate: usize, paused: bool, following: bool, seed: &str, delta: f32) {
     window.canvas.set_draw_color(Color::RGB(0, 0, 0));
     window.canvas.clear();
 
@@ -100,8 +100,8 @@ pub(crate) fn render(world: &World, window: &mut SDLWindow, camera: &Camera, tic
     }
 
     text!(window, 10, 10,
-        &format!("{:3.1}mspt {:6.1}fps {} {}",
-            delta as f32 / 1000.0, 1000_000.0 / delta as f32,
+        &format!("{:3.1}mspt {:6.1}tps {} {}",
+            delta / 1000.0, 1000_000.0 / delta as f32,
             if paused { "paused".to_string() } else { format!("1/{} speed", tick_rate) },
             if following { "following" } else { "" }
         ), (255, 255, 255));

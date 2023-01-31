@@ -48,7 +48,7 @@ fn main() {
 
     let mut world = World::new(80, 60, p_types);
 
-    for _ in 0..5000 {
+    for _ in 0..6000 {
         let x = rnd.gen_range(0..800000) as f32 / 1000.0;
         let y = rnd.gen_range(0..600000) as f32 / 1000.0;
         let c = rnd.gen_range(0..world.p_types.len());
@@ -79,10 +79,7 @@ fn run(mut world: World, seed: &str){
     loop {
         for event in window.event_pump.poll_iter() {
             match event {
-                Event::Quit { .. } |
-                Event::KeyDown { keycode: Some(Keycode::Escape), .. } => {
-                    exit(0)
-                },
+                Event::Quit { .. } => exit(0),
                 Event::MouseWheel { y, ..} => {
                     let zoom_factor = 1.1;
                     camera.translate.0 -= mouse_pos.0 / camera.zoom;
@@ -106,6 +103,7 @@ fn run(mut world: World, seed: &str){
                     if keymod.is_empty() {
                         if let Some(key) = keycode {
                             match key {
+                                Keycode::Escape => exit(0),
                                 Keycode::Space => paused = !paused,
                                 Keycode::P => following = !following,
                                 Keycode::Up =>  if tick_rate < 64 { tick_rate *= 2 },
@@ -118,34 +116,36 @@ fn run(mut world: World, seed: &str){
                 _ => {}
             }
         }
-        if elapsed < 150_000 && frame_count % tick_rate == 0 && !paused {
-            tick(&mut world, elapsed);
-            if following {
-                let mut sum_vx = 0.0;
-                let mut sum_vy = 0.0;
-                let mut total = 0.0;
-                for x in 0..world.chunks.len() {
-                    for y in 0..world.chunks[x].len() {
-                        for p in &world.chunks[x][y].particles {
-                            let xp = ((x as f32 * 10.0 + p.x) + camera.translate.0).rem_euclid(world.width as f32) * camera.zoom;
-                            let yp = ((y as f32 * 10.0 + p.y) + camera.translate.1).rem_euclid(world.height as f32) * camera.zoom;
-                            if xp > window.width as f32 / 4.0 && xp < window.width as f32 * 3.0 / 4.0 && yp > window.height as f32 / 4.0 && yp < window.height as f32 * 3.0 / 4.0 {
-                                sum_vx += p.vx;
-                                sum_vy += p.vy;
-                                total += 1.0;
+        if frame_count % tick_rate == 0 && !paused {
+            if elapsed < 150_000 {
+                tick(&mut world, elapsed as f32);
+                if following {
+                    let mut sum_vx = 0.0;
+                    let mut sum_vy = 0.0;
+                    let mut total = 0.0;
+                    for x in 0..world.chunks.len() {
+                        for y in 0..world.chunks[x].len() {
+                            for p in &world.chunks[x][y].particles {
+                                let xp = ((x as f32 * 10.0 + p.x) + camera.translate.0).rem_euclid(world.width as f32) * camera.zoom;
+                                let yp = ((y as f32 * 10.0 + p.y) + camera.translate.1).rem_euclid(world.height as f32) * camera.zoom;
+                                if xp > window.width as f32 / 4.0 && xp < window.width as f32 * 3.0 / 4.0 && yp > window.height as f32 / 4.0 && yp < window.height as f32 * 3.0 / 4.0 {
+                                    sum_vx += p.vx;
+                                    sum_vy += p.vy;
+                                    total += 1.0;
+                                }
                             }
                         }
                     }
-                }
-                if total > 0.0 {
-                    camera.translate.0 -= sum_vx / total;
-                    camera.translate.1 -= sum_vy / total;
+                    if total > 0.0 {
+                        camera.translate.0 -= sum_vx / total;
+                        camera.translate.1 -= sum_vy / total;
+                    }
                 }
             }
+            elapsed = time.elapsed().as_micros();
         }
-        render(&world, &mut window, &camera, tick_rate, paused, following, seed, elapsed);
+        render(&world, &mut window, &camera, tick_rate, paused, following, seed, elapsed as f32);
         frame_count = frame_count.wrapping_add(1);
-        elapsed = time.elapsed().as_micros();
         time = std::time::Instant::now();
     }
 }

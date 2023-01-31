@@ -3,6 +3,10 @@
 
 Implementation of Particle Life in Rust using SDL2 for graphics.
 
+The simulation should be framerate independent, but "large jumps"
+on low fps may lead to different behaviour
+
+
 ![particle_life_JJA9YE4DSF.png](img%2Fparticle_life_JJA9YE4DSF.png)
 
 The simulation almost works like a normal planet simulation.
@@ -35,7 +39,19 @@ The images in this README use 7 particle types with random coefficients ranging 
 and a particle count of 5000 in a 800x600 world (same as screen size)
 
 ## Run App
-`cargo run --release -- <optional seed>`
+`cargo run --release [-- seed]`
+
+(seed can be any string)
+
+## Cool Seeds
+- `23212C8C` (13 colors, 10000 particles)
+
+<img src="img/particle_life_PflT5PsB1L.png" style="width: 20%">
+<img src="img/particle_life_nj71PpQ7ke.png" style="width: 28%">
+
+- 47BB2C8E (7 colors, 6000 particles)
+
+![particle_life_sDHRcFPpQq.png](img%2Fparticle_life_sDHRcFPpQq.png)
 
 ## Key Binds
 - `Up`/`Down` slower/faster tick rate
@@ -73,4 +89,5 @@ If necessary replace with a version compatible to your download.
 <img src="img/particle_life_JMFnMYu61u.png" style="width: 30%">
 <img src="img/particle_life_qKVdys72F0.png" style="width: 30%">
 <img src="img/particle_life_uGUNOKSr8r.png" style="width: 30%">
+<img src="img/particle_life_Zjsx3uoLo9.png" style="width: 30%">
 </div>

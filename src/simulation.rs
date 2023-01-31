@@ -1,7 +1,7 @@
 use crate::world::World;
 
-pub(crate) fn tick(world: &mut World, delta_micro: u128) {
-    let delta = delta_micro.max(1) as f32 / 100_000.0;
+pub(crate) fn tick(world: &mut World, delta_micro: f32) {
+    let delta = delta_micro.max(1.0)/ 100_000.0;
     // UPDATE SPEED
     for x in 0..world.chunks.len() {
         for y in 0..world.chunks[x].len() {
@@ -35,8 +35,8 @@ pub(crate) fn tick(world: &mut World, delta_micro: u128) {
                         if dp3 < 2.0 && c > &0.0 {
                             dp3 = -f32::max(dp3, 0.1)
                         }
-                        p.vx += dx * delta * 0.2 / dp3 * c;
-                        p.vy += dy * delta * 0.2 / dp3 * c;
+                        p.vx += dx * delta * 0.1 / dp3 * c;
+                        p.vy += dy * delta * 0.1 / dp3 * c;
                     }
                     p.vx *= 0.9995;
                     p.vy *= 0.9995;
