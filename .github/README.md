@@ -54,7 +54,7 @@ If necessary replace with a version compatible to your download.
 `SDL2_gfx.lib` was built manually for windows x64 and is in local files instead of on `PATH` so you don't have to.
 
 ## Gallery
-
+<div float="left">
 <img src="img/particle_life_6fi9OwZucZ.png" style="width: 33%">
 <img src="img/particle_life_060FKP3GCj.png" style="width: 33%">
 <img src="img/particle_life_bOXJLRWIYc.png" style="width: 33%">
@@ -67,3 +67,4 @@ If necessary replace with a version compatible to your download.
 <img src="img/particle_life_vY6k93bhWe.png" style="width: 33%">
 <img src="img/particle_life_zB7nm8V9gB.png" style="width: 33%">
 <img src="img/particle_life_ZTA3KZiH0D.png" style="width: 33%">
+</div>
