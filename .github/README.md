@@ -55,16 +55,16 @@ If necessary replace with a version compatible to your download.
 
 ## Gallery
 <div float="left">
-<img src="img/particle_life_6fi9OwZucZ.png" style="width: 33%">
-<img src="img/particle_life_060FKP3GCj.png" style="width: 33%">
-<img src="img/particle_life_bOXJLRWIYc.png" style="width: 33%">
-<img src="img/particle_life_CCLCHxKC9c.png" style="width: 33%">
-<img src="img/particle_life_CdhsHAZnNX.png" style="width: 33%">
-<img src="img/particle_life_JBde8WtrUI.png" style="width: 33%">
-<img src="img/particle_life_nHavG9BXcS.png" style="width: 33%">
-<img src="img/particle_life_SiuCV4qD08.png" style="width: 33%">
-<img src="img/particle_life_Uf2qaENn61.png" style="width: 33%">
-<img src="img/particle_life_vY6k93bhWe.png" style="width: 33%">
-<img src="img/particle_life_zB7nm8V9gB.png" style="width: 33%">
-<img src="img/particle_life_ZTA3KZiH0D.png" style="width: 33%">
+<img src="img/particle_life_6fi9OwZucZ.png" style="width: 30%">
+<img src="img/particle_life_060FKP3GCj.png" style="width: 30%">
+<img src="img/particle_life_bOXJLRWIYc.png" style="width: 30%">
+<img src="img/particle_life_CCLCHxKC9c.png" style="width: 30%">
+<img src="img/particle_life_CdhsHAZnNX.png" style="width: 30%">
+<img src="img/particle_life_JBde8WtrUI.png" style="width: 30%">
+<img src="img/particle_life_nHavG9BXcS.png" style="width: 30%">
+<img src="img/particle_life_SiuCV4qD08.png" style="width: 30%">
+<img src="img/particle_life_Uf2qaENn61.png" style="width: 30%">
+<img src="img/particle_life_vY6k93bhWe.png" style="width: 30%">
+<img src="img/particle_life_zB7nm8V9gB.png" style="width: 30%">
+<img src="img/particle_life_ZTA3KZiH0D.png" style="width: 30%">
 </div>
