@@ -33,8 +33,8 @@ fn main() {
         (255, 0, 0), (0, 255, 0), (0, 255, 0),
         (255, 255, 0), (255, 0, 255), (0, 255, 255),
         (255, 128, 0), (255, 0, 128),
-        (128, 255, 0), (0, 255, 128),
-        (0, 128, 255), (128, 0, 255),
+        //(128, 255, 0), (0, 255, 128),
+        //(0, 128, 255), (128, 0, 255),
         (255, 255, 255)
     ];
     let l = colors.len();
@@ -100,7 +100,7 @@ fn run(mut world: World, seed: &str){
                     }
                 }
                 Event::KeyDown { keycode, keymod, ..} => {
-                    if keymod.is_empty() {
+                    if keymod.is_empty() || true {
                         if let Some(key) = keycode {
                             match key {
                                 Keycode::Escape => exit(0),
